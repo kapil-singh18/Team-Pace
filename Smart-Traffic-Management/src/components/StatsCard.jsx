@@ -6,7 +6,7 @@ const StatsCard = ({ icon, title, value, unit, change }) => {
 
     return (
         <div
-            className="bg-white rounded-xl p-5 flex flex-col gap-2 w-61 
+            className="bg-white rounded-xl p-5 flex flex-col gap-2 w-60 hover:shadow-lg hover:scale-[1.02] 
                  transition-all duration-300 border border-transparent
                  hover:shadow-lg hover:border-green-500"
         >

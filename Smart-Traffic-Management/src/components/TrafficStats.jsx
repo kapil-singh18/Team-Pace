@@ -45,13 +45,14 @@ const TrafficStats = () => {
         <section className="px-6 py-6 bg-gray-50 ">
             {/* Section Heading */}
             <h2 className="text-green-600 font-semibold text-lg">
-                Traffic Control Center
+                Traffic Management Dashboard
+
             </h2>
             <p className="text-gray-500 text-sm mb-6">
                 Real-time monitoring and intelligent traffic optimization
             </p>
 
-            {/* Stats Cards Grid (centered) */}
+
             <div className="flex flex-wrap justify-center gap-6">
                 {statsData.map((stat, index) => (
                     <StatsCard key={index} {...stat} />
