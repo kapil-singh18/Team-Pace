@@ -6,9 +6,9 @@ import {
     Map,
     BarChart3,
     AlertTriangle,
-    Bell,
-    User,
     Search,
+    User,
+    Settings,
 } from "lucide-react";
 
 const Header = ({
@@ -20,10 +20,8 @@ const Header = ({
         { name: "Analytics", icon: <BarChart3 size={18} /> },
         { name: "Alerts", icon: <AlertTriangle size={18} /> },
     ],
-    notifications = 3,
     user = { name: "Sarah Johnson", role: "Traffic Operator" },
 }) => {
-    // State to track active nav tab
     const [activeTab, setActiveTab] = useState("Dashboard");
 
     return (
@@ -47,9 +45,10 @@ const Header = ({
                         <button
                             key={index}
                             onClick={() => setActiveTab(item.name)}
-                            className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-medium transition ${isActive
-                                ? "bg-gray-100 border-b-2 border-green-500 text-black"
-                                : "text-gray-700 hover:text-black"
+                            className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-medium transition
+                                ${isActive
+                                    ? "bg-green-100 border-b-2 border-green-500 text-green-700"
+                                    : "text-gray-700 hover:bg-green-50 hover:text-green-600"
                                 }`}
                         >
                             {item.icon}
@@ -74,19 +73,14 @@ const Header = ({
                     />
                 </div>
 
-                {/* Notifications */}
-                <div className="relative cursor-pointer ">
-                    <Bell size={20} className="text-gray-700" />
-                    {notifications > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                            {notifications}
-                        </span>
-                    )}
+                {/* Settings Icon (highlighted) */}
+                <div className=" text-black p-2 rounded-full cursor-pointer shadow hover:bg-gray-100 transition">
+                    <Settings size={18} />
                 </div>
 
-                {/* User Profile */}
-                <div className="flex items-center gap-2">
-                    <div className="bg-green-500 text-white p-2 rounded-full">
+                {/* User Profile (highlighted) */}
+                <div className="flex items-center gap-2 cursor-pointer">
+                    <div className="bg-green-500 text-white p-2 rounded-full shadow hover:bg-green-600 transition">
                         <User size={18} />
                     </div>
                     <div>
