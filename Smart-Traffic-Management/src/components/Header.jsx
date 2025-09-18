@@ -1,5 +1,5 @@
 // src/components/Header.jsx
-import React, { useState } from "react";
+import React from "react";
 import {
     LayoutDashboard,
     Activity,
@@ -21,8 +21,9 @@ const Header = ({
         { name: "Alerts", icon: <AlertTriangle size={18} /> },
     ],
     user = { name: "Sarah Johnson", role: "Traffic Operator" },
+    activeTab = "Dashboard",
+    onTabChange,
 }) => {
-    const [activeTab, setActiveTab] = useState("Dashboard");
 
     return (
         <header className="flex items-center justify-between px-6 py-3 shadow bg-white">
@@ -44,7 +45,7 @@ const Header = ({
                     return (
                         <button
                             key={index}
-                            onClick={() => setActiveTab(item.name)}
+                            onClick={() => onTabChange && onTabChange(item.name)}
                             className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-medium transition
                                 ${isActive
                                     ? "bg-green-100 border-b-2 border-green-500 text-green-700"
@@ -73,12 +74,12 @@ const Header = ({
                     />
                 </div>
 
-                {/* Settings Icon (highlighted) */}
+
                 <div className=" text-black p-2 rounded-full cursor-pointer shadow hover:bg-gray-100 transition">
                     <Settings size={18} />
                 </div>
 
-                {/* User Profile (highlighted) */}
+
                 <div className="flex items-center gap-2 cursor-pointer">
                     <div className="bg-green-500 text-white p-2 rounded-full shadow hover:bg-green-600 transition">
                         <User size={18} />

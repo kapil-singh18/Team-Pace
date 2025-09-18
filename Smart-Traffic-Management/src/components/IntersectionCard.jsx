@@ -56,7 +56,12 @@ const IntersectionCard = ({
 
             {/* Alert */}
             {alert && (
-                <div className="flex items-center gap-2 bg-red-100 text-red-700 border border-red-200 p-2 rounded-lg mb-4 text-sm animate-pulse truncate">
+                <div
+                    className={`flex items-center gap-2 text-red-700 p-2 rounded-lg mb-4 text-sm animate-pulse truncate border ${typeof alert === "string" && alert.toLowerCase().includes("emergency vehicle")
+                        ? "bg-white border-red-500"
+                        : "bg-red-100 border-red-200"
+                        }`}
+                >
                     <FaExclamationTriangle /> {alert}
                 </div>
             )}
