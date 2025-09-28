@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900">
       <Header activeTab={activeTab} onTabChange={setActiveTab} />
       <div className={`${isPageLoading ? 'opacity-0' : 'opacity-100 zoom-in'}`}>
         <CurrentPage />

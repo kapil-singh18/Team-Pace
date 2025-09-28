@@ -15,7 +15,7 @@ const Footer = ({
     }, []);
 
     return (
-        <footer className="w-full border-t border-gray-200 bg-gray-50 text-sm text-gray-600 px-4 py-2 flex justify-between items-center">
+        <footer className="w-full border-t border-gray-700 bg-gray-800 text-sm text-gray-400 px-4 py-2 flex justify-between items-center">
             <div>
                 © {copyrightYear} {systemName} - {version}
             </div>

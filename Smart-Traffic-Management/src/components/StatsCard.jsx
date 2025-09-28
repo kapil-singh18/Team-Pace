@@ -6,13 +6,13 @@ const StatsCard = ({ icon, title, value, unit, change }) => {
 
     return (
         <div
-            className="bg-white rounded-xl p-5 flex flex-col gap-2 w-60 hover:shadow-lg hover:scale-[1.02] 
-                 transition-all duration-300 border border-transparent
+            className="bg-gray-800 rounded-xl p-5 flex flex-col gap-2 w-60 hover:shadow-lg hover:scale-[1.02] 
+                 transition-all duration-300 border border-gray-700
                  hover:shadow-lg hover:border-green-500"
         >
             {/* Icon + Change */}
             <div className="flex items justify-between">
-                <div className="p-2 rounded-lg bg-gray-100">{icon}</div>
+                <div className="p-2 rounded-lg bg-gray-700">{icon}</div>
                 <span
                     className={`text-sm font-medium ${isPositive ? "text-green-600" : "text-red-500"
                         }`}
@@ -22,12 +22,12 @@ const StatsCard = ({ icon, title, value, unit, change }) => {
             </div>
 
             {/* Title */}
-            <p className="text-sm text-gray-600">{title}</p>
+            <p className="text-sm text-gray-300">{title}</p>
 
             {/* Value */}
-            <h2 className="text-2xl font-bold text-black">
+            <h2 className="text-2xl font-bold text-white">
                 {value}{" "}
-                <span className="text-sm font-normal text-gray-500">{unit}</span>
+                <span className="text-sm font-normal text-gray-400">{unit}</span>
             </h2>
         </div>
     );

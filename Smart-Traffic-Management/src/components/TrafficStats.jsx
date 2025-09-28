@@ -42,13 +42,13 @@ const TrafficStats = () => {
     ];
 
     return (
-        <section className="px-6 py-6 bg-gray-50 ">
+        <section className="px-6 py-6 bg-gray-900 ">
             {/* Section Heading */}
-            <h2 className="text-green-600 font-semibold text-lg">
+            <h2 className="text-green-400 font-semibold text-lg">
                 Traffic Management Dashboard
 
             </h2>
-            <p className="text-gray-500 text-sm mb-6">
+            <p className="text-gray-400 text-sm mb-6">
                 Real-time monitoring and intelligent traffic optimization
             </p>
 
