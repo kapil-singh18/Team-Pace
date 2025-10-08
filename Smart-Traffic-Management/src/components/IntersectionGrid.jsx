@@ -1,82 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import IntersectionCard from "./IntersectionCard";
 
-const IntersectionGrid = () => {
-    const [intersections, setIntersections] = useState([
-        {
-            name: "Main St & Broadway",
-            statusColor: "red",
-            alert: "Emergency vehicle detected",
-            currentPhase: "EAST WEST",
-            remainingTime: 38,
-            totalVehicles: 45,
-            queues: { North: 8, South: 5, East: 12, West: 7 },
-            avgTripTime: 285,
-            improvement: 12,
-            aiEnabled: true,
-        },
-        {
-            name: "5th Ave & 42nd St",
-            statusColor: "yellow",
-            alert: null,
-            currentPhase: "NORTH SOUTH",
-            remainingTime: 20,
-            totalVehicles: 33,
-            queues: { North: 3, South: 4, East: 6, West: 8 },
-            avgTripTime: 198,
-            improvement: 8,
-            aiEnabled: false,
-        },
-        {
-            name: "Park Ave & 23rd St",
-            statusColor: "green",
-            alert: null,
-            currentPhase: "EAST WEST",
-            remainingTime: 17,
-            totalVehicles: 18,
-            queues: { North: 2, South: 1, East: 2, West: 3 },
-            avgTripTime: 156,
-            improvement: 3,
-            aiEnabled: false,
-        },
-        {
-            name: "Main St & Broadway",
-            statusColor: "red",
-            alert: null,
-            currentPhase: "EAST WEST",
-            remainingTime: 38,
-            totalVehicles: 45,
-            queues: { North: 8, South: 5, East: 12, West: 7 },
-            avgTripTime: 285,
-            improvement: 12,
-            aiEnabled: false,
+const IntersectionGrid = ({ data = [] }) => {
+    const [intersections, setIntersections] = useState([]);
 
-        },
-        {
-            name: "5th Ave & 42nd St",
-            statusColor: "yellow",
-            alert: "Emergency vehicle detected",
-            currentPhase: "NORTH SOUTH",
-            remainingTime: 20,
-            totalVehicles: 33,
-            queues: { North: 3, South: 4, East: 6, West: 8 },
-            avgTripTime: 198,
-            improvement: 8,
-            aiEnabled: true,
-        },
-        {
-            name: "Park Ave & 23rd St",
-            statusColor: "green",
-            alert: null,
-            currentPhase: "EAST WEST",
-            remainingTime: 17,
-            totalVehicles: 18,
-            queues: { North: 2, South: 1, East: 2, West: 3 },
-            avgTripTime: 156,
-            improvement: 3,
-            aiEnabled: false,
-        },
-    ]);
+    useEffect(() => {
+        // Transform the data to match the expected format
+        const transformedData = data.map(intersection => {
+            const getStatusColor = (congestion) => {
+                switch (congestion) {
+                    case 'critical': return 'red';
+                    case 'high': return 'yellow';
+                    case 'medium': return 'yellow';
+                    case 'low': return 'green';
+                    default: return 'gray';
+                }
+            };
+
+            const getCurrentPhase = () => {
+                const phases = ['NORTH SOUTH', 'EAST WEST'];
+                return phases[Math.floor(Math.random() * phases.length)];
+            };
+
+            return {
+                id: intersection.id,
+                name: intersection.name,
+                statusColor: intersection.status === 'maintenance' ? 'gray' : getStatusColor(intersection.congestionLevel),
+                alert: intersection.status === 'maintenance' ? 'Under Maintenance' :
+                    intersection.incidents > 0 ? `${intersection.incidents} incidents detected` : null,
+                currentPhase: getCurrentPhase(),
+                remainingTime: Math.floor(Math.random() * 60) + 15,
+                totalVehicles: intersection.vehicleCount,
+                queues: {
+                    North: Math.floor(Math.random() * 15) + 1,
+                    South: Math.floor(Math.random() * 15) + 1,
+                    East: Math.floor(Math.random() * 15) + 1,
+                    West: Math.floor(Math.random() * 15) + 1
+                },
+                avgTripTime: Math.floor(intersection.averageWaitTime * 60), // Convert to seconds
+                improvement: Math.floor(Math.random() * 25) + 5,
+                aiEnabled: intersection.status === 'active',
+                cameras: intersection.cameras,
+                sensors: intersection.sensors,
+                throughput: intersection.throughput,
+                averageSpeed: intersection.averageSpeed
+            };
+        });
+        setIntersections(transformedData);
+    }, [data]);
 
     const toggleAI = (index) => {
         setIntersections((prev) =>
@@ -93,16 +64,24 @@ const IntersectionGrid = () => {
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center mt-8">
-            {intersections.map((intersection, index) =>
-                intersection ? (
-                    <IntersectionCard
-                        key={index}
-                        {...intersection}
-                        onToggleAI={() => toggleAI(index)}
-                    />
-                ) : null
-            )}
+        <div className="space-y-4">
+            <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-white">Traffic Intersections</h2>
+                <div className="text-sm text-gray-400">
+                    {intersections.filter(i => i.aiEnabled).length} of {intersections.length} using AI optimization
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
+                {intersections.map((intersection, index) =>
+                    intersection ? (
+                        <IntersectionCard
+                            key={intersection.id}
+                            {...intersection}
+                            onToggleAI={() => toggleAI(index)}
+                        />
+                    ) : null
+                )}
+            </div>
         </div>
     );
 };

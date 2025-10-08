@@ -1,5 +1,5 @@
 // src/components/Header.jsx
-import React from "react";
+import React, { useState } from "react";
 import {
     LayoutDashboard,
     Activity,
@@ -9,6 +9,8 @@ import {
     Search,
     User,
     Settings,
+    LogOut,
+    ChevronDown,
 } from "lucide-react";
 
 const Header = ({
@@ -20,10 +22,12 @@ const Header = ({
         { name: "Analytics", icon: <BarChart3 size={18} /> },
         { name: "Alerts", icon: <AlertTriangle size={18} /> },
     ],
-    user = { name: "Sarah Johnson", role: "Traffic Operator" },
+    user,
     activeTab = "Dashboard",
     onTabChange,
+    onLogout,
 }) => {
+    const [showUserMenu, setShowUserMenu] = useState(false);
 
     return (
         <header className="flex items-center justify-between px-6 py-3 shadow bg-gray-800 bounce-in-left">
@@ -78,14 +82,41 @@ const Header = ({
                     <Settings size={18} />
                 </div>
 
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <div className="bg-green-500 text-white p-2 rounded-full shadow hover:bg-green-600 transition hover-scale float">
-                        <User size={18} />
+                {/* User Menu */}
+                <div className="relative">
+                    <div
+                        className="flex items-center gap-2 cursor-pointer hover:bg-gray-700 p-2 rounded-lg transition"
+                        onClick={() => setShowUserMenu(!showUserMenu)}
+                    >
+                        <div className="bg-green-500 text-white p-2 rounded-full shadow hover:bg-green-600 transition hover-scale float">
+                            <User size={18} />
+                        </div>
+                        <div className="text-left">
+                            <h2 className="text-sm font-medium text-white">{user?.name}</h2>
+                            <p className="text-xs text-gray-400 capitalize">{user?.role}</p>
+                        </div>
+                        <ChevronDown size={16} className="text-gray-400" />
                     </div>
-                    <div>
-                        <h2 className="text-sm font-medium">{user.name}</h2>
-                        <p className="text-xs text-gray-400">{user.role}</p>
-                    </div>
+
+                    {/* Dropdown Menu */}
+                    {showUserMenu && (
+                        <div className="absolute right-0 top-full mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50">
+                            <div className="p-3 border-b border-gray-700">
+                                <p className="text-sm font-medium text-white">{user?.name}</p>
+                                <p className="text-xs text-gray-400">{user?.email}</p>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setShowUserMenu(false);
+                                    onLogout && onLogout();
+                                }}
+                                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition"
+                            >
+                                <LogOut size={16} />
+                                Sign Out
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>
